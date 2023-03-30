@@ -9,11 +9,11 @@ public class SimpleServer {
     public static void main(String[] args) throws IOException {
         var server = new ServerSocket(1600);
         System.out.println("Waiting...");
-        Socket soc = server.accept();
-        System.out.println("connect from " + soc.getInetAddress());
-        InputStream input = soc.getInputStream();
-        System.out.println(input.read());
-        input.close();
-        soc.close();
+        try (Socket soc = server.accept();
+            InputStream input = soc.getInputStream())
+        {
+            System.out.println("connect from " + soc.getInetAddress());
+            System.out.println(input.read());
+        }
     }
 }
