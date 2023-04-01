@@ -1,5 +1,9 @@
 package projava;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
 public class CheckFloat {
 
     enum FloatState {
@@ -49,6 +53,12 @@ public class CheckFloat {
                 case ZERO, INT, FRAC -> true;
                 default -> false;
             };
+        }
+
+        static Pattern pat = Pattern.compile("(0|[1-9][0-9])(\\.[0-9]+)?");
+        static boolean checkWithRegex(String data) {
+            Matcher mat = pat.matcher(data);
+            return mat.matches();
         }
 
         public static void main(String []args) {
