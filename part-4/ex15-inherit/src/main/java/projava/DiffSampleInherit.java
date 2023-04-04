@@ -22,44 +22,33 @@ public class DiffSampleInherit {
         f.setVisible(true);
     }
 
-    static abstract class ImageDrawer {
-        BufferedImage createImage() {
-            var image = new BufferedImage(250, 200, BufferedImage.TYPE_INT_RGB);
+    interface ImageDrawer {
+        default BufferedImage createImage() {
+            var image = new BufferedImage( 250, 200, BufferedImage.TYPE_INT_RGB);
             var graphics = image.createGraphics();
             draw(graphics);
             return image;
         }
 
-        abstract void draw(Graphics2D g);
+        void draw(Graphics2D g);
     }
 
-
-    // static class LineDrawer extends ImageDrawer {
-    //     @Override
-    //     void draw(Graphics2D g) {
-    //         g.drawLine(10, 10, 220, 180);
-    //     }
-    // }
-    // static BufferedImage lineImage() {
-    //     return new LineDrawer().createImage();
-    // }
     // 上記の処理を以下のように無名クラスで実装することもできる
     static BufferedImage lineImage() {
         return new ImageDrawer() {
             @Override
-            void draw(Graphics2D g) {
+            public void draw(Graphics2D g) {
                 g.drawLine(10, 10, 220, 180);
             }
         }.createImage();
     }
 
-    static class RectDrawer extends ImageDrawer {
-        @Override
-        void draw(Graphics2D g) {
-            g.drawRect(10, 10, 220, 180);
-        }
-    }
-    static BufferedImage rectImage() {
-        return new RectDrawer().createImage();
+    public static BufferedImage rectImage() {
+        return new ImageDrawer() {
+            @Override
+            public void draw(Graphics2D g) {
+                g.drawRect(10, 10, 220, 180);
+            }
+        }.createImage();
     }
 }
