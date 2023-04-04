@@ -22,6 +22,8 @@ public class DiffSampleInherit {
         f.setVisible(true);
     }
 
+    // 関数型インタフェースとして使う場合アノテーションを付けるとラムダ式が使えることがわかりやすくなる
+    @FunctionalInterface
     interface ImageDrawer {
         default BufferedImage createImage() {
             var image = new BufferedImage( 250, 200, BufferedImage.TYPE_INT_RGB);
@@ -33,14 +35,10 @@ public class DiffSampleInherit {
         void draw(Graphics2D g);
     }
 
-    // 上記の処理を以下のように無名クラスで実装することもできる
+    // 匿名クラスをラムダ式に置き換え
     static BufferedImage lineImage() {
-        return new ImageDrawer() {
-            @Override
-            public void draw(Graphics2D g) {
-                g.drawLine(10, 10, 220, 180);
-            }
-        }.createImage();
+        ImageDrawer drawer = g -> g.drawLine(10, 10, 220, 180);
+        return drawer.createImage();
     }
 
     public static BufferedImage rectImage() {
