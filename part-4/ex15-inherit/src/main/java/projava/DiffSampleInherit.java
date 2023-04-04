@@ -34,14 +34,23 @@ public class DiffSampleInherit {
     }
 
 
-    static class LineDrawer extends ImageDrawer {
-        @Override
-        void draw(Graphics2D g) {
-            g.drawLine(10, 10, 220, 180);
-        }
-    }
+    // static class LineDrawer extends ImageDrawer {
+    //     @Override
+    //     void draw(Graphics2D g) {
+    //         g.drawLine(10, 10, 220, 180);
+    //     }
+    // }
+    // static BufferedImage lineImage() {
+    //     return new LineDrawer().createImage();
+    // }
+    // 上記の処理を以下のように無名クラスで実装することもできる
     static BufferedImage lineImage() {
-        return new LineDrawer().createImage();
+        return new ImageDrawer() {
+            @Override
+            void draw(Graphics2D g) {
+                g.drawLine(10, 10, 220, 180);
+            }
+        }.createImage();
     }
 
     static class RectDrawer extends ImageDrawer {
