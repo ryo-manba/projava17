@@ -35,10 +35,17 @@ public class DiffSampleInherit {
         void draw(Graphics2D g);
     }
 
+    // ラムダ式を受け取ることを前提とした高階関数
+    static BufferedImage createImage(Consumer<Graphics2D> drawer) {
+        var image = new BufferedImage(600, 400, BufferedImage.TYPE_INT_RGB);
+        var graphics = image.createGraphics();
+        drawer.accept(graphics);
+        return image;
+    }
+
     // 匿名クラスをラムダ式に置き換え
     static BufferedImage lineImage() {
-        ImageDrawer drawer = g -> g.drawLine(10, 10, 220, 180);
-        return drawer.createImage();
+        return createImage(g -> g.drawLine(10, 10, 220, 180));
     }
 
     public static BufferedImage rectImage() {
